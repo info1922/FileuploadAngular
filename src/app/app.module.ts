@@ -8,7 +8,8 @@ import { appRouting } from './app.routing';
 
 // Firebase
 import { AngularFireModule } from 'angularfire2';
-import { environment } from '../environments/environment';
+import { AngularFireDatabaseModule } from 'angularfire2/database-deprecated';
+import { AngularFireAuthModule } from 'angularfire2/auth';
 
 // Services
 import { CargaImagenesService } from './services/carga-imagenes.service';
@@ -16,6 +17,9 @@ import { CargaImagenesService } from './services/carga-imagenes.service';
 import { AppComponent } from './app.component';
 import { CargaComponent } from './components/carga/carga.component';
 import { FotosComponent } from './components/fotos/fotos.component';
+
+import { environment } from '../environments/environment';
+
 
 @NgModule({
   declarations: [
@@ -28,6 +32,7 @@ import { FotosComponent } from './components/fotos/fotos.component';
     FormsModule,
     HttpModule,
     AngularFireModule.initializeApp(environment.firebase),
+    AngularFireDatabaseModule,
     appRouting
   ],
   providers: [CargaImagenesService],
