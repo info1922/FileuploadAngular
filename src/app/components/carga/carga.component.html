@@ -2,7 +2,7 @@
     <div class="col-md-4">
         <h5>Seleccione archivos</h5>
 
-        <div class="well drop-zone">
+        <div appNgDropFiles [ngClass]="{'file-over':estaSobreDropZone }" (archivoSobre)="archivoSobreDropZone($event)" class="well drop-zone">
             <h4>Suelta los archivos aquí</h4>
             <img src="/assets/img/drop-images.png">
         </div>

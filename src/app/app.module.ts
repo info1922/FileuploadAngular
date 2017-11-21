@@ -14,6 +14,9 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 // Services
 import { CargaImagenesService } from './services/carga-imagenes.service';
 
+// Directivas
+import { DirectivesDirective } from './directives/directives.directive';
+
 import { AppComponent } from './app.component';
 import { CargaComponent } from './components/carga/carga.component';
 import { FotosComponent } from './components/fotos/fotos.component';
@@ -25,7 +28,8 @@ import { environment } from '../environments/environment';
   declarations: [
     AppComponent,
     CargaComponent,
-    FotosComponent
+    FotosComponent,
+    DirectivesDirective
   ],
   imports: [
     BrowserModule,
