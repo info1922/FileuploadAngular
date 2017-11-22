@@ -34,7 +34,73 @@ export class DirectivesDirective {
   // Cuado el cursor entra y sale
   @HostListener('dragover', ['$event'])
   public onDragOver(event: any) {
+
+    const tranferencia = this._getTransferencia(event);
+    tranferencia.dropEffect = 'copy';
+    this._prevenirYdetener(event);
+
     this.archivoSobre.emit(true);
+  }
+
+  @HostListener('drop', ['$event'])
+  public onDrop(event: any) {
+
+    const tranferencia = this._getTransferencia(event);
+
+    if (!tranferencia) {
+      return;
+    }
+    this._agregarArchivos( tranferencia.files );
+    this._prevenirYdetener( event );
+
+  }
+
+  // Valida si hay algo que transferir
+  private _getTransferencia ( event: any) {
+    // console.log(event);
+    return event.dataTransfer ? event.dataTransfer : event.originalEvent.dataTransfer;
+  }
+
+  private _agregarArchivos ( archivosLista: FileList ) {
+    console.log(archivosLista);
+  }
+
+  // Previene el comportamiento por defecto
+  private _prevenirYdetener (event: any) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  private _archivoPuedeSerCargado ( archivo: File ) {
+
+    if ( this._archivoYaFueDroppeado( archivo.name) && this._esImagen(archivo.type) ) {
+
+      return true;
+
+    }
+
+    return false;
+
+  }
+
+  private _archivoYaFueDroppeado (nombreArchivo: string): boolean {
+    // tslint:disable-next-line:forin
+    for ( const i in this.archivos ) {
+      const arch = this.archivos[i];
+
+      if (arch.archivo.name === nombreArchivo) {
+        console.log('Archivo ya existe en la lista', nombreArchivo);
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  // Validar el archivo
+
+  private _esImagen(tipoArchivo: string): boolean {
+    return (tipoArchivo === '' || tipoArchivo === undefined ) ? false: tipoArchivo.startsWith('image');
   }
 
 
