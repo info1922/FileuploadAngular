@@ -51,6 +51,9 @@ export class DirectivesDirective {
       return;
     }
     this._agregarArchivos( tranferencia.files );
+
+    this.archivoSobre.emit(false);
+
     this._prevenirYdetener( event );
 
   }
@@ -62,7 +65,23 @@ export class DirectivesDirective {
   }
 
   private _agregarArchivos ( archivosLista: FileList ) {
-    console.log(archivosLista);
+    // console.log(archivosLista);
+
+    // tslint:disable-next-line:forin
+    for ( let propiedad in Object.getOwnPropertyNames( archivosLista )) {
+      // tslint:disable-next-line:prefer-const
+      let archTemporal = archivosLista[propiedad];
+
+      if ( this._archivoPuedeSerCargado(archTemporal) ) {
+
+        // tslint:disable-next-line:prefer-const
+        let nuevoArchivo = new FileItem( archTemporal );
+
+        this.archivos.push(nuevoArchivo);
+
+      }
+    }
+    console.log(this.archivos);
   }
 
   // Previene el comportamiento por defecto
